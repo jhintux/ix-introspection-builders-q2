@@ -1,6 +1,6 @@
 # ix-introspection-builders-q2
 
-A Solana dice-betting program where the house and player commit to randomness **before** a bet is placed, then reveal secrets at resolution. The program uses **instruction introspection** (reading the previous instruction in the transaction via the Instructions sysvar) to capture commitments and secrets from SPL Memo instructions without storing secrets on-chain at bet time.
+A Solana betting program where the house and player commit to randomness **before** a bet is placed, then reveal secrets at resolution. The program uses **instruction introspection** (reading the previous instruction in the transaction via the Instructions sysvar) to capture commitments and secrets from SPL Memo instructions without storing secrets on-chain at bet time.
 
 The player picks a target roll (1–99) and stakes lamports into a house vault. At resolve time, both parties reveal their secrets; the program recomputes the commitment, derives a fair roll from the hash, and pays out if the player's target beats the roll.
 
@@ -150,3 +150,6 @@ anchor test
 ```
 
 The test suite airdrops SOL to house and player, initializes the vault, places a bet via `place_bet_v2` with commitment memos, then resolves with secret memos.
+
+## Tests running
+![Dice Game Test](/assets/betting_game_tests.png)
