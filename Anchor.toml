@@ -6,6 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
+amm-builders-q2 = "3r8zwrn1haZMdp83YYaCfhBVnQUpjStYqRCn6KiXJgN9"
 ix_introspection_builders_q2 = "HxE2gTVhrzJmvTUC8xSfxtEKjEjxCZUj5A9srNxVtqVr"
 
 [registry]
@@ -16,4 +17,4 @@ cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 \"tests/**/*.ts\""
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 \"tests/**/**.ts\""

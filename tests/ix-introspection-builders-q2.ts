@@ -3,6 +3,7 @@ import { BN, Program } from "@coral-xyz/anchor";
 import { IxIntrospectionBuildersQ2 } from "../target/types/ix_introspection_builders_q2";
 import { createHash, randomBytes } from "crypto";
 import { createMemoInstruction } from "@solana/spl-memo";
+import { confirmTx } from "./helpers";
 
 const BET_ROLL = 50;
 const BET_AMOUNT = BigInt(anchor.web3.LAMPORTS_PER_SOL / 100);
@@ -59,7 +60,7 @@ describe("ix-introspection-builders-q2", () => {
       })
       .signers([house])
       .rpc()
-      .then(confirmTx);
+      .then((tx) => confirmTx(provider, tx));
   });
 
   it("Place bet", async () => {
@@ -81,7 +82,7 @@ describe("ix-introspection-builders-q2", () => {
       .signers([user, house])
       .preInstructions([combined_commitment_ix])
       .rpc()
-      .then(confirmTx);
+      .then((tx) => confirmTx(provider, tx));
   });
 
   it("Resolve a bet", async () => {
@@ -103,7 +104,7 @@ describe("ix-introspection-builders-q2", () => {
       .signers([user, house])
       .preInstructions([combined_secrets_ix])
       .rpc()
-      .then(confirmTx);
+      .then((tx) => confirmTx(provider, tx));
   });
 
   it.skip("Refund a bet", async () => {
@@ -156,16 +157,5 @@ describe("ix-introspection-builders-q2", () => {
     console.log("Block time", blockTime);
   });
 
-  async function confirmTx(tx: anchor.web3.TransactionSignature) {
-    const blockhash = await provider.connection.getLatestBlockhash();
-    const result = await provider.connection.confirmTransaction({
-      blockhash: blockhash.blockhash,
-      lastValidBlockHeight: blockhash.lastValidBlockHeight,
-      signature: tx,
-    });
-    if (result.value.err) {
-      throw new Error(result.value.err.toString());
-    }
-    console.log("Transaction confirmed", tx);
-  }
+  
 });

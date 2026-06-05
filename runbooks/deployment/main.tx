@@ -17,3 +17,10 @@ action "deploy_ix_introspection_builders_q2" "svm::deploy_program" {
     // This will make deployments instantaneous, but is deviating from how the deployments will take place on devnet/mainnet.
     // instant_surfnet_deployment = true
 }
+
+action "deploy_amm_builders_q2" "svm::deploy_program" {
+    description = "Deploy amm_builders_q2 program"
+    program = svm::get_program_from_anchor_project("amm_builders_q2")
+    authority = signer.authority
+    payer = signer.payer
+}
